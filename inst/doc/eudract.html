@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Simon Bond" />
+
+<meta name="date" content="2019-11-06" />
+
+<title>Eudract Safety XML</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Eudract Safety XML</h1>
+<h4 class="author">Simon Bond</h4>
+<h4 class="date">2019-11-06</h4>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The European Clinical Trials Database <a href="https://eudract.ema.europa.eu/">Eudract</a> is run by the European Medicines Agency. All studies that are officially registered clinical trials have to enter the results of the final analysis into the website to be made public. There is a large amount of documentation online that will not be repeated here.</p>
+<p>The detailed entering of safety information is an onerous task if it is to be done by hand. However we do have the facility to upload an XML file to automate this step. This R package seeks to enable the production of an XML file from a standard structure of Safety data that is recorded on a patient-level.</p>
+<p>The key functions are:</p>
+<ul>
+<li><code>safety_summary</code></li>
+<li><code>simple_safety_xml</code></li>
+<li><code>eudract_convert</code></li>
+</ul>
+<p>We provide a dummy safety data set that is one line per patient-event: <code>?safety</code>. The format of the data, specifically the variable names is described in the help file printed below. This needs to be turned into several frequency tables: one given information at a group level; one given at the event level, broken down into serious and non-serious events. The term “group” here corresponds to treatment arms in a randomised control trial. You need to define a group within Eudract even if it is a one-armed study, in which case it can be a “dummy” label.</p>
+<p>Some information is defined in a hard-coded fashion below, but it is understood that this will be generated by code if applied in real life. Each entry in the vectors below correspond to counts in each of the two groups.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">subjectsExposed &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Control&quot;</span>=<span class="dv">99</span>,<span class="st">&quot;Experimental&quot;</span>=<span class="dv">101</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co">#count of deaths not in the Safety data. Could be c(0,0)</span></a>
+<a class="sourceLine" id="cb1-3" title="3">deathsExternal &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Control&quot;</span>=<span class="dv">3</span>,<span class="st">&quot;Experimental&quot;</span>=<span class="dv">5</span>)</a></code></pre></div>
+<p>Coded adverse events are required to be helpful and avoid the task of reconciling minor spelling or text inconsistencies. This package and vignette assumes this is the case, and will not work in the absence of coding. We cannot provide the full MedDRA dictionary, due to copy right reasons. But normally this is available to sponsors. However, for upload into Eudract, as a minimal requirement, only the System Organ Class (SOC) needs to be fully coded into the Eudract internal version coding system. We have provided an internal data set, derived from the <a href="http://eutct.ema.europa.eu/eutct/viewListDisplay.do?listId=100000000006&amp;firstTime=true&amp;d-5037238-p=1&amp;d-5037238-n=1&amp;d-5037238-o=1&amp;d-5037238-s=termName">eutct site</a> in the package to use this; see <code>?soc_code</code>.</p>
+<div id="safety-data-set" class="section level2">
+<h2>Safety data set</h2>
+<table width="100%" summary="page for safety">
+<tr>
+<td>
+safety
+</td>
+<td style="text-align: right;">
+R Documentation
+</td>
+</tr>
+</table>
+<h2>
+Example of safety data
+</h2>
+<h3>
+Description
+</h3>
+<p>
+A dataset containing some example data of safety event in raw source format
+</p>
+<h3>
+Usage
+</h3>
+<pre>
+safety
+</pre>
+<h3>
+Format
+</h3>
+<p>
+a data frame with 8 columns and 16 rows
+</p>
+<dl>
+<dt>
+pt
+</dt>
+<dd>
+<p>
+meddra preferred term code
+</p>
+</dd>
+<dt>
+subjid
+</dt>
+<dd>
+<p>
+a unique subject identifier
+</p>
+</dd>
+<dt>
+related
+</dt>
+<dd>
+<p>
+a logical indicating if the event is related to the treatment
+</p>
+</dd>
+<dt>
+soc
+</dt>
+<dd>
+<p>
+the meddra code for the System Organ Class
+</p>
+</dd>
+<dt>
+fatal
+</dt>
+<dd>
+<p>
+a numerical 0/1 to indicate if the event was fatal
+</p>
+</dd>
+<dt>
+serious
+</dt>
+<dd>
+<p>
+a numerical 0/1 to indicate if the event was serious
+</p>
+</dd>
+<dt>
+group
+</dt>
+<dd>
+<p>
+the treatment group for the subject
+</p>
+</dd>
+<dt>
+term
+</dt>
+<dd>
+<p>
+a text description of the event. Needs to be matching 1-1 with the pt code
+</p>
+</dd>
+</dl>
+<h3>
+Details
+</h3>
+<p>
+The data contains one row per patient-event. So the numbers exposed in each arm cannot be inferred from these data, as patients with no events will not be included in these data.
+</p>
+<p>
+The variable names and formats are those required by <code>safety_summary</code>. The variable <code>pt</code> is not strictly required. An alternative to <code>soc</code> would be the equivalent character string from <code>soc_code</code>
+</p>
+</div>
+<div id="calculate-summary-statistics" class="section level2">
+<h2>Calculate Summary Statistics</h2>
+<p>We provide a function that derives the patient and event counts as required in a format internal to R.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">safety_statistics &lt;-<span class="st"> </span><span class="kw">safety_summary</span>(safety, </a>
+<a class="sourceLine" id="cb2-2" title="2">                                    <span class="dt">exposed=</span>subjectsExposed, </a>
+<a class="sourceLine" id="cb2-3" title="3">                                    <span class="dt">excess_deaths =</span> deathsExternal, </a>
+<a class="sourceLine" id="cb2-4" title="4">                                    <span class="dt">freq_threshold =</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-5" title="5">                                    )</a>
+<a class="sourceLine" id="cb2-6" title="6">safety_statistics</a></code></pre></div>
+<pre><code>## Group-Level Statistics
+## 
+##          title subjectsAffectedBySeriousAdverseEvents
+## 1      Control                                     15
+## 2 Experimental                                     33
+##   subjectsAffectedByNonSeriousAdverseEvents
+## 1                                        15
+## 2                                        24
+##   deathsResultingFromAdverseEvents subjectsExposed deathsAllCauses
+## 1                                9              99              12
+## 2                               22             101              27
+## 
+## Non-serious event-level statistics (intial rows)
+## 
+##     groupTitle subjectsAffected occurrences                    term
+## 1      Control                1           1 Acute coronary syndrome
+## 2 Experimental                0           0 Acute coronary syndrome
+## 3      Control                1           1  Intestinal perforation
+## 4 Experimental                0           0  Intestinal perforation
+## 5      Control                1           1      Laryngeal stenosis
+## 6 Experimental                1           1      Laryngeal stenosis
+##        eutctId
+## 1 100000004849
+## 2 100000004849
+## 3 100000004856
+## 4 100000004856
+## 5 100000004855
+## 6 100000004855
+## 
+## Serious event-level statistics (intial rows)
+## 
+##     groupTitle subjectsAffected occurrences                     term
+## 1      Control                1           1           Abdominal pain
+## 2 Experimental                0           0           Abdominal pain
+## 3      Control                1           1 Aortic valve replacement
+## 4 Experimental                0           0 Aortic valve replacement
+## 5      Control                1           1          B-cell lymphoma
+## 6 Experimental                0           0          B-cell lymphoma
+##        eutctId occurrencesCausallyRelatedToTreatment deaths
+## 1 100000004856                                     0      0
+## 2 100000004856                                     0      0
+## 3 100000004865                                     0      0
+## 4 100000004865                                     0      0
+## 5 100000004851                                     0      0
+## 6 100000004851                                     0      0
+##   deathsCausallyRelatedToTreatment
+## 1                                0
+## 2                                0
+## 3                                0
+## 4                                0
+## 5                                0
+## 6                                0</code></pre>
+</div>
+<div id="convert-to-xml" class="section level2">
+<h2>Convert to XML</h2>
+<p>If you have produced these statistics through separate coding, then you can use the <code>eudract:::create.summary_statistics()</code> function to put them into the correct internal format and start the conversion to XML directly.</p>
+<p>First we export the <code>safety_statistics</code> to a XML document that is human readable “simple.xml”. Then we convert to the EudraCT format.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">simple &lt;-<span class="st"> </span><span class="kw">tempfile</span>(<span class="dt">fileext =</span> <span class="st">&quot;.xml&quot;</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2">eudract_upload_file &lt;-<span class="st"> </span><span class="kw">tempfile</span>(<span class="dt">fileext =</span> <span class="st">&quot;.xml&quot;</span>)</a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="kw">simple_safety_xml</span>(safety_statistics, simple)</a></code></pre></div>
+<pre><code>## &#39;C:\Users\sjb277\AppData\Local\Temp\RtmpuyNlWl\file17482b777f24.xml&#39; is created or modified</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">eudract_convert</span>(<span class="dt">input=</span>simple,</a>
+<a class="sourceLine" id="cb6-2" title="2">                <span class="dt">output=</span>eudract_upload_file)</a></code></pre></div>
+<pre><code>## &#39;C:\Users\sjb277\AppData\Local\Temp\RtmpuyNlWl\file17484fc950e8.xml&#39; is created or modified</code></pre>
+<pre><code>## Please email cctu@addenbrookes.nhs.uk to tell us if you have successfully uploaded a study to EudraCT.
+## This is to allow us to measure the impact of this tool.</code></pre>
+</div>
+</div>
+<div id="output" class="section level1">
+<h1>Output</h1>
+<p>The key output is <a href="../extdata/safety_upload.xml">safety_upload.xml</a>.</p>
+<p>We can validate the output against the XML schema provided by Eudract, although the call to <code>eudract_convert()</code> does also do this behind the scenes, returning the value <code>TRUE</code> if there are no errors against the schema validation. The <a href="https://eudract.ema.europa.eu/docs/technical/schemas/clinicaltrial/results/adverseEvents.xsd">schema</a>, was downloaded to this package on 15NOV2016 - note this is a semi-readible file of code/data rather than a standard web page.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">myschema &lt;-<span class="st"> </span>xml2<span class="op">::</span><span class="kw">read_xml</span>(<span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>,<span class="st">&quot;adverseEvents.xsd&quot;</span>, <span class="dt">package=</span><span class="st">&quot;eudract&quot;</span>))</a>
+<a class="sourceLine" id="cb9-2" title="2">aes &lt;-<span class="st"> </span>xml2<span class="op">::</span><span class="kw">read_xml</span>(eudract_upload_file)</a>
+<a class="sourceLine" id="cb9-3" title="3">check &lt;-<span class="st"> </span>xml2<span class="op">::</span><span class="kw">xml_validate</span>(aes,myschema)</a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="cf">if</span>(check){<span class="kw">print</span>(<span class="st">&quot;Validation against the schema has passed!&quot;</span>)}</a></code></pre></div>
+<pre><code>## [1] &quot;Validation against the schema has passed!&quot;</code></pre>
+</div>
+<div id="upload" class="section level1">
+<h1>Upload</h1>
+<p>To use the resulting xml file navigate and log in online to the study specific area of the Eudract site. On the top banner is a link “Upload XML” which you follow. Choose the option “Adverse Events” rather than “Full data set”, and select the file xml you have produced. The resulting information can be viewed in the browser interactively or with a static <a href="../extdata/ct_result_0004-000245-38.pdf">pdf file</a> (note this is a fictitious study and fictitious data). This is not the only step in completing the Eudract report, as the description of the study, baseline characteristics and efficacy analysis will all need to be added. That is not the remit of this package though.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
