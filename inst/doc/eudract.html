@@ -13,7 +13,7 @@
 
 <meta name="author" content="Simon Bond" />
 
-<meta name="date" content="2020-02-12" />
+<meta name="date" content="2020-04-06" />
 
 <title>Eudract Safety XML</title>
 
@@ -305,7 +305,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Eudract Safety XML</h1>
 <h4 class="author">Simon Bond</h4>
-<h4 class="date">2020-02-12</h4>
+<h4 class="date">2020-04-06</h4>
 
 
 
@@ -503,10 +503,10 @@ The variable names and formats are those required by <code>safety_summary</code>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>simple &lt;-<span class="st"> </span><span class="kw">tempfile</span>(<span class="dt">fileext =</span> <span class="st">&quot;.xml&quot;</span>)</span>
 <span id="cb4-2"><a href="#cb4-2"></a>eudract_upload_file &lt;-<span class="st"> </span><span class="kw">tempfile</span>(<span class="dt">fileext =</span> <span class="st">&quot;.xml&quot;</span>)</span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="kw">simple_safety_xml</span>(safety_statistics, simple)</span></code></pre></div>
-<pre><code>## &#39;C:\Users\sjb277\AppData\Local\Temp\RtmpgboQsf\file3cac67ba9e9.xml&#39; is created or modified</code></pre>
+<pre><code>## &#39;C:\Users\sjb277\AppData\Local\Temp\RtmpSceTDd\file3c07f8b1bba.xml&#39; is created or modified</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">eudract_convert</span>(<span class="dt">input=</span>simple,</span>
 <span id="cb6-2"><a href="#cb6-2"></a>                <span class="dt">output=</span>eudract_upload_file)</span></code></pre></div>
-<pre><code>## &#39;C:\Users\sjb277\AppData\Local\Temp\RtmpgboQsf\file3cacbfb58b1.xml&#39; is created or modified</code></pre>
+<pre><code>## &#39;C:\Users\sjb277\AppData\Local\Temp\RtmpSceTDd\file3c07211178e.xml&#39; is created or modified</code></pre>
 <pre><code>## Please email cctu@addenbrookes.nhs.uk to tell us if you have successfully uploaded a study to EudraCT.
 ## This is to allow us to measure the impact of this tool.</code></pre>
 </div>
