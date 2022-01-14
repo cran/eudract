@@ -117,6 +117,9 @@ test_that("induced errors in the safety_summary output",
             expect_warning( simple_safety_xml(safety_stats,file.path(tempdir(),"simple.xml")) )
             expect_error(eudract_convert(file.path(tempdir(),"simple.xml"),
                                          file.path(tempdir(),"eudract.xml")))
+            expect_error(clintrials_gov_convert(file.path(tempdir(),"simple.xml"),
+                                         file.path(tempdir(),"ct.xml")))
+
           }
           )
 
@@ -158,4 +161,73 @@ test_that("create.safety_summary name checks",
           }
 
           )
+
+test_that("empty user details",
+          {
+            expect_error( clintrials_gov_upload(
+              input=file.path(path, "simple.xml"),
+              backup=file.path(path,"bak_study_file.xml"),
+              output=file.path(path,"study_file.xml"),
+              orgname="",
+              username=Sys.getenv("ct_user"),
+              password=Sys.getenv("ct_pass"),
+              studyid="1234",
+              url="https://prstest.clinicaltrials.gov/"),
+              "invalid orgname argument"
+            )
+            
+            expect_error( clintrials_gov_upload(
+              input=file.path(path, "simple.xml"),
+              backup=file.path(path,"bak_study_file.xml"),
+              output=file.path(path,"study_file.xml"),
+              orgname="AddenbrookesH",
+              username="",
+              password=Sys.getenv("ct_pass"),
+              studyid="1234",
+              url="https://prstest.clinicaltrials.gov/"),
+              "invalid username argument"
+            )
+            
+            if(Sys.getenv("ct_user")=="" | Sys.getenv("ct_pass")==""){skip("Need to have the userid/password as environment variables")}
+            expect_error( clintrials_gov_upload(
+              input=file.path(path, "simple.xml"),
+              backup=file.path(path,"bak_study_file.xml"),
+              output=file.path(path,"study_file.xml"),
+              orgname="AddenbrookesH",
+              username=Sys.getenv("ct_user"),
+              password="",
+              studyid="1234",
+              url="https://prstest.clinicaltrials.gov/"),
+              "invalid password argument"
+            )
+            
+            expect_error( clintrials_gov_upload(
+              input=file.path(path, "simple.xml"),
+              backup=file.path(path,"bak_study_file.xml"),
+              output=file.path(path,"study_file.xml"),
+              orgname="AddenbrookesH",
+              username=Sys.getenv("ct_user"),
+              password=Sys.getenv("ct_pass"),
+              studyid="",
+              url="https://prstest.clinicaltrials.gov/"),
+              "invalid studyid argument"
+            )
+            
+            
+            
+            }
+          
+          )
+
+test_that("missing values",
+          {
+          aes <- read.csv(file.path(path,"data/events.csv"), stringsAsFactors = FALSE)
+          aes$soc[1] <- NA
+          expect_warning(safety_summary(aes, exposed=c(700,750,730), soc_index = "soc_term", na.action=na.omit),"Your input data contain missing")   
+          aes$soc[1] <- ""
+          expect_warning(safety_summary(aes, exposed=c(700,750,730), soc_index = "soc_term", na.action=na.omit),"Your input data contain missing")   
+          expect_error(safety_summary(aes, exposed=c(700,750,730), soc_index = "soc_term"))   
+          
+          }
+)
 

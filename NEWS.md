@@ -1,3 +1,14 @@
+# eudract v0.10.1
+
+Added in testing of ClinicalTrials.gov functions, some of which works via test_that, and some needs user/passwords, and so should be sensitively skipped.  Resolving future-compatibility issues with `tidyr::complete` .
+
+
+
+# eudract v0.10.0
+
+Major version change to include uploads of the equivalent information to ClinicalTrials.gov.
+
+
 # eudract v0.9.3
 
 Error is caused if any of the group names are less than 4 characters in length, as EudraCT will reject this.

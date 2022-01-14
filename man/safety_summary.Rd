@@ -9,7 +9,8 @@ safety_summary(
   exposed,
   excess_deaths = 0,
   freq_threshold = 0,
-  soc_index = c("meddra", "soc_term")
+  soc_index = c("meddra", "soc_term"),
+  na.action = na.fail
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ ensure that the data$group is an ordered factor, or relying on alphabetical orde
 \item{freq_threshold}{a value on a percentage scale at which to remove events if the incidence falls below. Defaults to 0}
 
 \item{soc_index}{a character vector either "meddra" or "soc_term", which is used to identify if the soc variable in data gives the numerical meddra code or the description in English.}
+
+\item{na.action}{a function that indicates what should happen if the data contain missing values. The default is \code{\link{na.fail}}  as both repositories will not accept any missing values in the upload. Alternatives could be \code{\link{na.omit}}, \code{\link{na.exclude}}, or \code{\link{na.pass}}.}
 }
 \value{
 a list of three dataframes: GROUP, SERIOUS, NON_SERIOUS. Each contains the summary statistics required by EudraCT, and is suitable for export.
@@ -40,9 +43,24 @@ safety_statistics <- safety_summary(safety,
                                     exposed=c("Experimental"=60,"Control"=67))
 simple <- tempfile(fileext = ".xml")
 eudract <- tempfile(fileext = ".xml")
+ct <- tempfile(fileext = ".xml")
 simple_safety_xml(safety_statistics, simple)
 eudract_convert(input=simple,
                 output=eudract)
+clintrials_gov_convert(input=simple,
+                       original=system.file("extdata", "1234.xml", package ="eudract"),
+                output=ct)
+\dontrun{
+  # This needs a real user account to work
+  clintrials_gov_upload(
+    input=simple,
+    orgname="CTU",
+    username="Student",
+    password="Guinness",
+    studyid="1234"
+    )
+
+}
 }
 \seealso{
 \code{\link{eudract_convert}} \code{\link{simple_safety_xml}}
