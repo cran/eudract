@@ -12,7 +12,7 @@
 
 <meta name="author" content="Simon Bond" />
 
-<meta name="date" content="2023-08-09" />
+<meta name="date" content="2024-03-14" />
 
 <title>Eudract and CT.gov Safety XML</title>
 
@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Eudract and CT.gov Safety XML</h1>
 <h4 class="author">Simon Bond</h4>
-<h4 class="date">2023-08-09</h4>
+<h4 class="date">2024-03-14</h4>
 
 
 
@@ -581,16 +581,16 @@ CT.gov formats.</p>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>eudract_upload_file <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.xml&quot;</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>ct_upload_file <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.xml&quot;</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">simple_safety_xml</span>(safety_statistics, simple)</span></code></pre></div>
-<pre><code>## &#39;C:\Users\sjb277\AppData\Local\Temp\RtmpMJWL7T\file2c085415dbb.xml&#39; is created or modified</code></pre>
+<pre><code>## &#39;/tmp/Rtmpw8QfUO/file15bd56da62b.xml&#39; is created or modified</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">eudract_convert</span>(<span class="at">input=</span>simple,</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>                <span class="at">output=</span>eudract_upload_file)</span></code></pre></div>
-<pre><code>## &#39;C:\Users\sjb277\AppData\Local\Temp\RtmpMJWL7T\file2c082aa71578.xml&#39; is created or modified</code></pre>
+<pre><code>## &#39;/tmp/Rtmpw8QfUO/file15bd3bb5fa98.xml&#39; is created or modified</code></pre>
 <pre><code>## Please email cuh.cctu@nhs.net to tell us if you have successfully uploaded a study to EudraCT.
 ## This is to allow us to measure the impact of this tool.</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">clintrials_gov_convert</span>(<span class="at">input=</span>simple,</span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>                       <span class="at">original=</span><span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;1234.xml&quot;</span>, <span class="at">package =</span><span class="st">&quot;eudract&quot;</span>),</span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>                <span class="at">output=</span>ct_upload_file)</span></code></pre></div>
-<pre><code>## &#39;C:\Users\sjb277\AppData\Local\Temp\RtmpMJWL7T\file2c0872b41aa5.xml&#39; is created or modified</code></pre>
+<pre><code>## &#39;/tmp/Rtmpw8QfUO/file15bd36869b1c.xml&#39; is created or modified</code></pre>
 <pre><code>## Please email cuh.cctu@nhs.net to tell us if you have successfully uploaded a study to ClinicalTrials.gov .
 ## This is to allow us to measure the impact of this tool.</code></pre>
 <p>Note that for the ClinicalTrials.gov, there must

@@ -13,13 +13,25 @@
 #' @importFrom dplyr left_join mutate select arrange
 #' @importFrom magrittr %>%
 #' @importFrom ggplot2 ggplot aes geom_point coord_flip ylab xlab scale_y_continuous geom_errorbar scale_color_manual scale_shape_manual geom_hline theme element_rect element_text element_line element_blank  ggplot_gtable ggplot_build labs position_dodge unit
-#' @importFrom gridExtra  grid.arrange arrangeGrob
+#' @importFrom patchwork plot_layout
+#' 
+#' @details This is essentially a list of two ggplot objects joined together in a list, named
+#' as "left.panel" and "right.panel". 
+#' They can each be individually edited if needed
 #' 
 #' @examples 
 #' safety_statistics <- safety_summary(safety,
 #'            exposed=c("Experimental"=60,"Control"=67))
 #' head( relative_risk(safety_statistics, type="serious") )
-#' dot_plot(safety_statistics, type="non_serious", base=4)
+#' fig <- dot_plot(safety_statistics, type="non_serious", base=4)
+#' fig
+#' fig$left.panel <- fig$left.panel + ggplot2::labs(title="Absolute Risk")
+#' fig
+#' temp <- tempfile(fileext=".png")
+#' png(filename = temp)
+#' print(fig)
+#' dev.off()
+#' 
 
 dot_plot <- function(safety,
                      type=c("non_serious", "serious"),
@@ -56,8 +68,10 @@ dot_plot <- function(safety,
     obj$percentage$term <- tidy_text(obj$percentage$term)
   }
   
+  n_groups=nrow(obj$GROUP)
+  
  # obj$percentage %<>% mutate(term=tidy_text(term))
-  if( valid_estimates){
+  if( valid_estimates & 1< n_groups){
     obj$relative_risk %<>% dplyr::filter(!is.na(rr))
     index <-paste(obj$percentage$soc_term,obj$percentage$term) %in%
       paste(obj$relative_risk$soc_term,obj$relative_risk$term)
@@ -79,62 +93,95 @@ dot_plot <- function(safety,
     scale_y_continuous(breaks = pretty(obj$percentage$pct)) +
     ret()
   
-  n_groups=nrow(obj$GROUP)
-  
-  title <- sort(obj$GROUP$title)
-  ref_index <- which(title==reference)
-  
-  cols <- scales::hue_pal()(n_groups)[-ref_index]
-  # set shapes
-  shps <- scales::shape_pal()(n_groups)[-ref_index]
-  names(shps) <- names(cols) <- title[ -ref_index]
   
   
-  pd <- position_dodge(0.5)
-  right.panel <- ggplot(data=obj$relative_risk,aes(x=term, y=rr, shape = group,colour=group))+
-    #geom_pointrange(data = ae_rr, aes(x=pt, y=rr, ymin=rr.LCI, ymax=rr.UCI)) +
-    geom_point( position = pd, size = 2.5)+
-    #geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2)+
-    scale_color_manual(values=cols) +
-    scale_shape_manual(values=shps) +
-    coord_flip()+
-    scale_y_continuous(trans="log",
-                       name = paste0("Relative risk (",size,"% CI)"),
-                       breaks = scales::trans_breaks("log", function(x) base^x),
-                       labels =  scales::math_format(.x) 
-    )+
-    # scale_y_log10(name = "Relative risk (95% CI)",
-    #               breaks = scales::trans_breaks("log10", function(x) 10^x),
-    #               labels = scales::trans_format("log10", scales::math_format(10^.x)))+
-    geom_hline(yintercept = 1, linetype="dotted", color = "black", linewidth=0.5) +
-    xlab("")  +
-    ret(y.blank = T)
+  if( n_groups==1){output <- left.panel+theme(legend.position = "none")}
   
-  if(n_groups==2){
-    right.panel <- right.panel+ 
-      geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2,colour="black")
+  if( 1< n_groups){
+    title <- sort(obj$GROUP$title)
+    ref_index <- which(title==reference)
+    
+    cols <- scales::hue_pal()(n_groups)[-ref_index]
+    # set shapes
+    shps <- scales::shape_pal()(n_groups)[-ref_index]
+    names(shps) <- names(cols) <- title[ -ref_index]
+    
+    
+    pd <- position_dodge(0.5)
+    right.panel <- ggplot(data=obj$relative_risk,aes(x=term, y=rr, shape = group,colour=group))+
+      #geom_pointrange(data = ae_rr, aes(x=pt, y=rr, ymin=rr.LCI, ymax=rr.UCI)) +
+      geom_point( position = pd, size = 2.5)+
+      #geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2)+
+      scale_color_manual(values=cols) +
+      scale_shape_manual(values=shps) +
+      coord_flip()+
+      scale_y_continuous(trans="log",
+                         name = paste0("Relative risk (",size,"% CI)"),
+                         breaks = scales::trans_breaks("log", function(x) base^x),
+                         labels =  scales::math_format(.x) 
+      )+
+      # scale_y_log10(name = "Relative risk (95% CI)",
+      #               breaks = scales::trans_breaks("log10", function(x) 10^x),
+      #               labels = scales::trans_format("log10", scales::math_format(10^.x)))+
+      geom_hline(yintercept = 1, linetype="dotted", color = "black", linewidth=0.5) +
+      xlab("")  +
+      ret(y.blank = T)
+    
+    if(n_groups==2){
+      right.panel <- right.panel+ 
+        geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2,colour="black")
     }else{
       right.panel <- right.panel+ 
         geom_errorbar( aes(ymin=lower, ymax=upper), position = pd, linewidth=.2)  
     }
-  
+    
+    # Version 1 pre patchwork  
+    output <- list(left.panel=left.panel, right.panel=right.panel)
+    class(output) <- c( "dot_plot")
+    #   # so you can still edit the component ggplots using standard tools
+    #   print(output)
+    #   invisible(output)
+  }
+  output
+}
+
+#' print methods for dot_plot object
+#' 
+#' @param x dot_plot object
+#' @param ... other arguments for generic methods
+
+#' @export
+print.dot_plot <- function(x,...){
+  left.panel <- x$left.panel
+  right.panel <- x$right.panel
   
   #Deal with legend
   lg <- g_legend(left.panel)
-  lheight <- sum(lg$height)
-  lwidth <- sum(lg$width)
   
-  #Combine two plots
-  grid.arrange(arrangeGrob(left.panel + theme(legend.position="none",
-                                              plot.margin=unit(c(1,0,0,1), "cm")),
-                           right.panel + theme(axis.text.y=element_blank(),
-                                               legend.position = "none",
-                                               plot.margin=unit(c(1,1,0,0), "cm")),
-                           nrow=1),
-               lg, nrow=2,
-               heights = grid::unit.c(unit(1, "npc") - lheight, lheight))
+  # get number of rows 
+  
+  n <- dplyr::n_distinct( left.panel$data$term)
+  
+  print( 
+    ((left.panel|right.panel)&theme(legend.position = "none"))/lg +
+    plot_layout(heights=c(n+1,1))
+  )
+  invisible(x)
   
 }
+
+
+#' plot methods for dot_plot object
+#' 
+#' @param x dot_plot object
+#' @param ... other arguments for generic methods
+
+#' @export
+plot.dot_plot <- print.dot_plot
+  
+
+
+
 
 ret <- function(y.blank = F){
   th <- theme(rect = element_rect(fill ="#FFFFFF", linetype = 0, colour = NA),
@@ -180,32 +227,33 @@ if(getRversion() >= "2.15.1"){
 ## add testing. 
 ## test with 3 or more groups
 
-
-order_filter <- function(rel_risk,threshold=10){
-  if(!inherits(rel_risk,"relative_risk")){stop("need to input a relative_risk object")}
-  terms <- rel_risk$relative_risk$term 
-  dups <- terms[duplicated(terms)]
-
-  rr2 <- rel_risk$relative_risk %>% 
-  mutate( term= ifelse( term %in% dups,  paste(term, soc_term, sep="-"), term))
-  index <- order(rr2$rr)
-  
-  rr2$term <- factor(rr2$term,levels = rr2$term[index], ordered = TRUE)
-  pct2 <- rel_risk$percentage%>% 
-    mutate( term= ifelse( term %in% dups,  paste(term, soc_term, sep="-"), term))
-  pct2$term <- factor(pct2$term,levels = rr2$term[index], ordered = TRUE)
-  
-  rel_risk_ord <- rel_risk
-  rel_risk_ord$relative_risk <- rr2
-  rel_risk_ord$percentage <- pct2
-  
-  
-  keep <- pct2 %>% group_by(term) %>% 
-    summarise( keep= threshold < max(pct)) %>% filter(keep) %>% 
-    pull(term)
-  rel_risk_ord <- rel_risk
-  rel_risk_ord$relative_risk <- rr2 %>% filter( term %in% keep)
-  rel_risk_ord$percentage <- pct2 %>% filter( term %in% keep)
-  rel_risk_ord
-}
-
+## THIS IS ALSO In the relative_risk  so delete one ---!!
+# 
+# order_filter <- function(rel_risk,threshold=10){
+#   if(!inherits(rel_risk,"relative_risk")){stop("need to input a relative_risk object")}
+#   terms <- rel_risk$relative_risk$term 
+#   dups <- terms[duplicated(terms)]
+# 
+#   rr2 <- rel_risk$relative_risk %>% 
+#   mutate( term= ifelse( term %in% dups,  paste(term, soc_term, sep="-"), term))
+#   index <- order(rr2$rr)
+#   
+#   rr2$term <- factor(rr2$term,levels = rr2$term[index], ordered = TRUE)
+#   pct2 <- rel_risk$percentage%>% 
+#     mutate( term= ifelse( term %in% dups,  paste(term, soc_term, sep="-"), term))
+#   pct2$term <- factor(pct2$term,levels = rr2$term[index], ordered = TRUE)
+#   
+#   rel_risk_ord <- rel_risk
+#   rel_risk_ord$relative_risk <- rr2
+#   rel_risk_ord$percentage <- pct2
+#   
+#   
+#   keep <- pct2 %>% group_by(term) %>% 
+#     summarise( keep= threshold < max(pct)) %>% filter(keep) %>% 
+#     pull(term)
+#   rel_risk_ord <- rel_risk
+#   rel_risk_ord$relative_risk <- rr2 %>% filter( term %in% keep)
+#   rel_risk_ord$percentage <- pct2 %>% filter( term %in% keep)
+#   rel_risk_ord
+# }
+# 

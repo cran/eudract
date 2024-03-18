@@ -2,13 +2,15 @@
 #' 
 #' @param safety  an object created by \code{\link{safety_summary}}
 #' @param type a choice of "non_serious" (default) or "serious" as to which type of AE to report on
-#' @param reference character vector nameing the refenrence arm for teh calculations. 
-#' Defualts to the first row of the safety$GROUP.
+#' @param reference character vector naming the reference arm for the calculations. 
+#' Defaults to the first row of the safety$GROUP.
 #' @param size a number between 0-100, giving the size of the confidence interval. 
 #' Default is 95.
 
-#' @return a data.frame that has the relative risk estimate and confidence intervals. 
-#' No adjustment made to deal with zeroes. 
+#' @return \code{relative_risk} returns of list of three items. "relative_risk" a data.frame that has the relative risk estimate and confidence intervals. 
+#' "percentage" a data.frame with absolute percentages. "GROUP" a copy from the original \code{safety_summary} object.
+#' No adjustment made to deal with zeroes. This is suitable input for the \code{dot_plot} function, and in most cases will not be 
+#' used directly, but may potentially be modified with filtration, or editing of terms, see \code{order_filter}.
 #' @seealso  \code{\link{safety_summary}} \code{\link{dot_plot}}
 #' 
 #' 
@@ -87,7 +89,7 @@ relative_risk <- function(safety,
 #' @param digits integer giving the number of significant figures to report to. Default of 3.
 #' @param  valid_estimates a logical, which determines if only terms with valid estimates of relative risk are included in the table.
 #' The alternative is to include terms with zeroes.
-#' @return A data frame that is suitable for printing to a report, giving relative risks
+#' @return \code{relative_risk_table} returns a data frame that is suitable for printing to a report, giving relative risks
 #' @export
 #' @rdname relative_risk
 
@@ -101,16 +103,16 @@ relative_risk_table <- function(safety,
   
   df <- obj$relative_risk
   if( valid_estimates){df <- df %>% dplyr::filter(!is.na(rr)& !is.infinite(rr)) }
- cols <- df$group %>% unique %>% length
+ cols <- df$group %>% unique 
  df <- df %>% 
    dplyr::arrange(soc_term, term, group) %>% 
    mutate( 
      text=paste0(signif(rr,digits=digits), " (", signif(lower, digits=digits),", ", signif(upper, digits=digits),")")
    ) %>% 
    select(group,soc_term, term, text)
- if( 1<cols){
-   df <- tidyr::pivot_wider(names_from = "group", values_from = "text") 
-   header <- paste0(df$group %>% unique, " Relative Risk (C.I.)")
+ if( 1<length(cols)){
+   df <- tidyr::pivot_wider(df,names_from = "group", values_from = "text", values_fill = "-") 
+   header <- paste0(cols, " - Relative Risk (C.I.)")
  }else{
    df <- df %>% select(-group) 
    header <- "Relative Risk (C.I.)"
@@ -128,7 +130,7 @@ relative_risk_table <- function(safety,
 #' @param rel_risk a relative risk object
 #' @param threshold a threshold on the percent scale, the max percentage for a term the incidence rate needs to exceed
 #' @export
-#' @returns a revised relative risk object, with the terms concatenated with SOC if there are any duplicates, 
+#' @returns \code{order_filter} returns a revised relative risk object, with the terms concatenated with SOC if there are any duplicates, 
 #' then ordered by relative risk, into a factor, and filtered to only those terms with an incidence rate above
 #' the threshold.
 #' @rdname relative_risk

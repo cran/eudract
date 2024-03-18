@@ -19,8 +19,8 @@ dot_plot(
 
 \item{type}{a choice of "non_serious" (default) or "serious" as to which type of AE to report on}
 
-\item{reference}{character vector nameing the refenrence arm for teh calculations. 
-Defualts to the first row of the safety$GROUP.}
+\item{reference}{character vector naming the reference arm for the calculations. 
+Defaults to the first row of the safety$GROUP.}
 
 \item{size}{a number between 0-100, giving the size of the confidence interval. 
 Default is 95.}
@@ -38,11 +38,24 @@ a graphical object that shows the estimates and CI of relative and absolute risk
 \description{
 creates a dot-plot of safety data showing the absolute and relative risks
 }
+\details{
+This is essentially a list of two ggplot objects joined together in a list, named
+as "left.panel" and "right.panel". 
+They can each be individually edited if needed
+}
 \examples{
 safety_statistics <- safety_summary(safety,
            exposed=c("Experimental"=60,"Control"=67))
 head( relative_risk(safety_statistics, type="serious") )
-dot_plot(safety_statistics, type="non_serious", base=4)
+fig <- dot_plot(safety_statistics, type="non_serious", base=4)
+fig
+fig$left.panel <- fig$left.panel + ggplot2::labs(title="Absolute Risk")
+fig
+temp <- tempfile(fileext=".png")
+png(filename = temp)
+print(fig)
+dev.off()
+
 }
 \seealso{
 \code{\link{safety_summary}} \code{\link{relative_risk}} [relative_risks()]
