@@ -12,7 +12,7 @@
 
 <meta name="author" content="Simon Bond" />
 
-<meta name="date" content="2024-03-14" />
+<meta name="date" content="2024-08-23" />
 
 <title>Eudract and CT.gov Safety XML</title>
 
@@ -51,7 +51,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -62,7 +62,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Eudract and CT.gov Safety XML</h1>
 <h4 class="author">Simon Bond</h4>
-<h4 class="date">2024-03-14</h4>
+<h4 class="date">2024-08-23</h4>
 
 
 
@@ -401,7 +401,7 @@ R Documentation
 </td>
 </tr>
 </table>
-<h2 id="safety">
+<h2>
 Example of safety data
 </h2>
 <h3>
@@ -503,6 +503,7 @@ The variable names and formats are those required by
 strictly required. An alternative to <code>soc</code> would be the
 equivalent character string from <code>soc_code</code>
 </p>
+</main>
 </div>
 </div>
 <div id="calculate-summary-statistics" class="section level2">
@@ -581,16 +582,16 @@ CT.gov formats.</p>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>eudract_upload_file <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.xml&quot;</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>ct_upload_file <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.xml&quot;</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">simple_safety_xml</span>(safety_statistics, simple)</span></code></pre></div>
-<pre><code>## &#39;/tmp/Rtmpw8QfUO/file15bd56da62b.xml&#39; is created or modified</code></pre>
+<pre><code>## &#39;/tmp/RtmpltlXGw/file126d251b3795.xml&#39; is created or modified</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">eudract_convert</span>(<span class="at">input=</span>simple,</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>                <span class="at">output=</span>eudract_upload_file)</span></code></pre></div>
-<pre><code>## &#39;/tmp/Rtmpw8QfUO/file15bd3bb5fa98.xml&#39; is created or modified</code></pre>
+<pre><code>## &#39;/tmp/RtmpltlXGw/file126d705342e4.xml&#39; is created or modified</code></pre>
 <pre><code>## Please email cuh.cctu@nhs.net to tell us if you have successfully uploaded a study to EudraCT.
 ## This is to allow us to measure the impact of this tool.</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">clintrials_gov_convert</span>(<span class="at">input=</span>simple,</span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>                       <span class="at">original=</span><span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;1234.xml&quot;</span>, <span class="at">package =</span><span class="st">&quot;eudract&quot;</span>),</span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>                <span class="at">output=</span>ct_upload_file)</span></code></pre></div>
-<pre><code>## &#39;/tmp/Rtmpw8QfUO/file15bd36869b1c.xml&#39; is created or modified</code></pre>
+<pre><code>## &#39;/tmp/RtmpltlXGw/file126df3be2fb.xml&#39; is created or modified</code></pre>
 <pre><code>## Please email cuh.cctu@nhs.net to tell us if you have successfully uploaded a study to ClinicalTrials.gov .
 ## This is to allow us to measure the impact of this tool.</code></pre>
 <p>Note that for the ClinicalTrials.gov, there must
@@ -628,9 +629,9 @@ against the schema validation.</p>
 <ul>
 <li><a href="https://eudract.ema.europa.eu/docs/technical/schemas/clinicaltrial/results/adverseEvents.xsd">eudract
 schema</a>, was downloaded to this package on 15NOV2016</li>
-<li><a href="https://prsinfo.clinicaltrials.gov/ProtocolRecordSchema.xsd">CT.gov
+<li><a href="https://cdn.clinicaltrials.gov/documents/xsd/prs/ProtocolRecordSchema.xsd">CT.gov
 overall xml schema</a>, was downloaded to this package on 29JUL2021</li>
-<li><a href="https://prsinfo.clinicaltrials.gov/RRSUploadSchema.xsd">CT.gov
+<li><a href="https://cdn.clinicaltrials.gov/documents/xsd/prs/RRSUploadSchema.xsd">CT.gov
 results xml schema</a>, was downloaded to this package on 31MAR2021</li>
 </ul>
 <p>note these are semi-readable files of code/data rather than a
