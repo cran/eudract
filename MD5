@@ -1,6 +1,6 @@
-b24f5e470a9e3f1c3189dfdbfc3af26d *DESCRIPTION
+2c4c77a45a2f4fa9b86d3ba5fad077b6 *DESCRIPTION
 d33ed08d0f970b20b1ee9717c818f683 *NAMESPACE
-bca20e6ec224c7aee880033ee482e618 *NEWS.md
+9d69ee49734a687fde0cc7b510f3c74f *NEWS.md
 36f81504cbac193689883aa92da990b0 *R/clintrials_gov_convert.R
 f2fc623f2ae30beada68c5017390a589 *R/clintrials_gov_upload.R
 85c3f64626e739d211d897845fdf2c20 *R/dot_plot.R
@@ -8,7 +8,7 @@ f2fc623f2ae30beada68c5017390a589 *R/clintrials_gov_upload.R
 8bd6b75935b631619cbf5a9ae18d0057 *R/incidence_table.R
 c5dab4763cd11676139a8ed1b61cf3ea *R/relative_risk.R
 08ee7e8a99b20a4b1820e8027d2450dd *R/safety.R
-38bf0f2b3d3bf46a0a4302cb86be0c1f *R/safety_summary.R
+5f73ad549e66e7889ea8bbd193861336 *R/safety_summary.R
 81f55bf731e89aa4170f869751c819d9 *R/simple_safety_xml.R
 32f53156225701155349b89cb045bdd0 *R/soc_code.R
 c153692d24405ba4847f416b02908112 *README.md
@@ -17,7 +17,7 @@ c153692d24405ba4847f416b02908112 *README.md
 f5ab010e16af423e53cded79a6e861de *data/soc_code.rda
 2f710d19053779414b17681ecebc0bfd *inst/doc/eudract.R
 fb9d93eea386f68788631aec4950adba *inst/doc/eudract.Rmd
-bdb48ac13a320dd55231771917777f4f *inst/doc/eudract.html
+a02be77b0f50966465c82fa0487088b3 *inst/doc/eudract.html
 91fae085fafaaa13fe438e5377a5f189 *inst/doc/standard_reporting.R
 18fae0756d777aa95dd3261576b982a9 *inst/doc/standard_reporting.Rmd
 4d2d93f30291de18a0f3080ead9f6190 *inst/doc/standard_reporting.html
@@ -54,13 +54,13 @@ c22bde6345544259863e4a5be66f994d *man/soc_code.Rd
 f3ab454d0a27044daa9a2ac8300fbb2d *tests/testthat/1234.xml
 b06844f314ad1dd9512151c74665d4d9 *tests/testthat/GROUP.csv
 b5f570ca46a0b1486a85d4165fb84e66 *tests/testthat/NONSERIOUS.csv
-95e9ccd98bc1625561fc5a349d0c0232 *tests/testthat/Rplots.pdf
+0715bb153dd534d3043c915db0e2c12b *tests/testthat/Rplots.pdf
 9050976f43be0f6ec7ddbffdd3dec1bc *tests/testthat/SERIOUS.csv
 5f859c8b3702959c9ce1aac3c6bffeed *tests/testthat/_snaps/dotplot/dotplot-1group.svg
-701af02a2af8c28c20dc9f574fc86854 *tests/testthat/_snaps/dotplot/dotplot-3groups.svg
-bf908049fa389f648f8e63632e48e098 *tests/testthat/_snaps/dotplot/dotplot-ref-rr.svg
-5983508592d139528f9f3c8e750630a7 *tests/testthat/_snaps/dotplot/dotplot-ref.svg
-5fcd791437261f1b265b4248f1de4a8b *tests/testthat/_snaps/dotplot/dotplot.svg
+3b9854d5ac60a192ef0f0ade3ffa1a0e *tests/testthat/_snaps/dotplot/dotplot-3groups.svg
+16d396d9fb7303efa543000eaa00baec *tests/testthat/_snaps/dotplot/dotplot-ref-rr.svg
+014a16b872cc06c857eea9ddc4c3be95 *tests/testthat/_snaps/dotplot/dotplot-ref.svg
+b09fb510b90b9e1e78ffabcd7237f242 *tests/testthat/_snaps/dotplot/dotplot.svg
 b139e02d797ba3f661a69b6984618563 *tests/testthat/bak_study_file.xml
 64b22a27ca8d04409f0d29d48d7b2ea4 *tests/testthat/ct.xml
 18eaac2890a7718741a574bc72661795 *tests/testthat/data/all_soc.csv
