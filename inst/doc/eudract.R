@@ -34,15 +34,15 @@ clintrials_gov_convert(input=simple,
 
 
 ## ----upload, eval=FALSE-------------------------------------------------------
-#  # Not actually run. It needs real user account details: the ones below are fictitious.
-#  clintrials_gov_upload(
-#      input=simple,
-#      orgname="CTU",
-#      username="Student",
-#      password="Guinness",
-#      studyid="1234"
-#      )
-#  
+# # Not actually run. It needs real user account details: the ones below are fictitious.
+# clintrials_gov_upload(
+#     input=simple,
+#     orgname="CTU",
+#     username="Student",
+#     password="Guinness",
+#     studyid="1234"
+#     )
+# 
 
 ## ----check_schema-------------------------------------------------------------
 myschema <- xml2::read_xml(system.file("extdata","adverseEvents.xsd", package="eudract"))

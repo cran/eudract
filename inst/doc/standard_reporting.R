@@ -44,8 +44,8 @@ fig$left.panel <- fig$left.panel + ggplot2::labs(title="Absolute Risk")
 fig
 
 ## ----dotplot_save, eval=FALSE-------------------------------------------------
-#  temp <- tempfile(fileext=".png")
-#  png(filename = temp)
-#  print(fig)
-#  dev.off()
+# temp <- tempfile(fileext=".png")
+# png(filename = temp)
+# print(fig)
+# dev.off()
 
